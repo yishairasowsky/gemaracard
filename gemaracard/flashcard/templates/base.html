@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gemaracard App</title>
+    <!-- <link type="text/css" rel="stylesheet" href="{% static 'django_blog.css' %}"> -->
+  </head>
+  <body>
+    <div id="header">
+    </div>
+    <div id="container">
+      <div id="content">
+      {% block content %}
+       [content will go here]
+      {% endblock %}
+      </div>
+    </div>
+  </body>
+</html>
