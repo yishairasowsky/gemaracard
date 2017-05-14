@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^', include('flashcard.urls')),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
-    # url(r'^$', 'flashcard.views.index', name='index'),
+    url(r'^accounts/', include('registration.backends.simple.urls', namespace='accounts')),
 ]
