@@ -14,7 +14,7 @@ def flashcard_new(request):
             # commit=False b/c we want to add more data
             card = form.save(commit=False)
             # add in once we have authentication
-            # card.author = request.user
+            card.author = request.user
             card.published_date = timezone.now()
             card.save()
             return redirect('flashcard_detail', pk=card.pk)
@@ -33,7 +33,7 @@ def flashcard_detail(request, pk):
 
 @login_required
 def flashcard_list(request):
-    flashcards = Flashcard.objects.all()
+    flashcards = Flashcard.objects.filter(author=request.user)
     context = {'cards': flashcards}
     return render(request, 'flashcard-list.html', context)
 

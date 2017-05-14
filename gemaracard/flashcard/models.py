@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Flashcard(models.Model):
@@ -40,6 +41,8 @@ class Flashcard(models.Model):
     page_number = models.IntegerField(blank=True, default=0)
     translation = models.TextField(blank=True)
     notes = models.TextField(blank=True)
+    published_date = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User)
 
     def __str__(self):
         return self.vocab_term
