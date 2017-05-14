@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<a class="backlink" href="/">Home</a>
+<h1>Gemaracards</h1>
 <ul>
   {% for card in cards %}
     <li><a href="{% url 'flashcard_detail' card.pk %}">{{ card.vocab_term }}</a></li>

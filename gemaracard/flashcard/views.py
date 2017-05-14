@@ -34,7 +34,8 @@ def flashcard_detail(request, pk):
 @login_required
 def flashcard_list(request):
     flashcards = Flashcard.objects.filter(author=request.user)
-    context = {'cards': flashcards}
+    sorted_flashcards = flashcards.order_by('vocab_term')
+    context = {'cards': sorted_flashcards}
     return render(request, 'flashcard-list.html', context)
 
 def index(request):

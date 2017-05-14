@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Hello flashcard land!</h1>
-<p><a href="{% url 'flashcard_new' %}" class="top-menu">New Flashcard</a></p>
+<h1>Gemaracard App</h1>
+<p>It's too hard to remember all these darn words. Make it simple!</p>
+<p>Make a gemaracard to keep your parsings and roots in order.</p>
+{% if user.is_authenticated %}
+  <a href="{% url 'flashcard_new' %}" class="btn btn-primary" role="button">New Gemaracard</a>
+  <a href="{% url 'flashcard_list' %}" class="btn btn-primary" role="button">See My Gemaracards</a>
+{% else %}
+  <p><a href="{% url 'login' %}">Login</a> to get started making your flashcards.</p>
+{% endif %}
 {% endblock %}
