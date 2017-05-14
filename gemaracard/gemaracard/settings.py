@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
+    'crispy_forms',
+    'compressor',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +53,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# urls
 ROOT_URLCONF = 'gemaracard.urls'
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/'
+INTERNAL_IPS = ('127.0.0.1',)
 
 TEMPLATES = [
     {
@@ -119,6 +125,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = '/static'
 STATIC_URL = '/static/'
-LOGIN_URL = '/login'
-LOGIN_REDIRECT_URL = '/'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# compressors
+COMPRESS_PRECOMPILERS = (
+   ('text/less', 'lessc {infile} {outfile}'),
+)
