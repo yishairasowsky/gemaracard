@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Flashcard(models.Model):
     vocab_term = models.CharField(max_length=200, blank=False)
     HEBREW = 'HEB'
@@ -41,4 +42,7 @@ class Flashcard(models.Model):
     notes = models.TextField(blank=True)
 
     def __str__(self):
+        return self.vocab_term
+
+    def __unicode__(self):
         return self.vocab_term

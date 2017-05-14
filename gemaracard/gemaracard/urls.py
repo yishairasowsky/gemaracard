@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from flashcard.views import index
 
 urlpatterns = [
     url(r'^flashcard', include('flashcard.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^', include('flashcard.urls')),
+    # url(r'^$', 'flashcard.views.index', name='index'),
 ]

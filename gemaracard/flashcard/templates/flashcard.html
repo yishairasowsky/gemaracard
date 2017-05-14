@@ -1,5 +1,19 @@
-<!-- <form action="/flashcard-form/" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit" />
-</form> -->
+{% extends "base.html" %}
+
+{% block content %}
+<a class="backlink" href="/">Home</a>
+<h1>{{ card }}</h1>
+<div class="card-body">
+  <ul>
+    <li>{{ card.language }}, {{ card.part_of_speech }}</li>
+    <li>{{ card.root }}</li>
+    {% if card.page_number %}
+      <li>{{ card.page_number }}</li>
+    {% endif %}
+    <li>{{ card.translation }}</li>
+    {% if card.notes %}
+      <li>{{ card.notes }}</li>
+    {% endif %}
+  </ul>
+</div>
+{% endblock %}
