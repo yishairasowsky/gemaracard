@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -5,7 +6,7 @@ from django.utils import timezone
 from .forms import FlashcardForm
 from .models import Flashcard
 
-
+@login_required
 def flashcard_new(request):
     if request.method == 'POST':
         form = FlashcardForm(request.POST)
@@ -21,7 +22,7 @@ def flashcard_new(request):
         form = FlashcardForm()
     return render(request, 'flashcard-form.html', {'form': form})
 
-
+@login_required
 def flashcard_detail(request, pk):
     try:
         card = Flashcard.objects.get(pk=pk)
@@ -30,6 +31,7 @@ def flashcard_detail(request, pk):
     context = {'card': card}
     return render(request, 'flashcard.html', context)
 
+@login_required
 def flashcard_list(request):
     flashcards = Flashcard.objects.all()
     context = {'cards': flashcards}
