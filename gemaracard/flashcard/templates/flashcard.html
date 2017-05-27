@@ -15,5 +15,10 @@
     {% endif %}
   </ul>
 </div>
-<a class="btn btn-danger delete-button" href="{% url 'delete' card.pk %}" role="button">Delete this card</a>
+<div class="btn-div">
+  <a class="btn btn-info" href="{% url 'edit' card.pk %}" role="button">Edit this card</a>
+</div>
+<div class="btn-div">
+  <a class="btn btn-danger" href="{% url 'delete' card.pk %}" role="button">Delete this card</a>
+</div>
 {% endblock %}

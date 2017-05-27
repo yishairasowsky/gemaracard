@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from flashcard.views import delete, flashcard_detail, flashcard_list, flashcard_new, index
+from flashcard.views import delete, edit, flashcard_detail, flashcard_list, flashcard_new, index
 
 urlpatterns = [
   url(r'^$', index, name='index'),
@@ -8,4 +8,5 @@ urlpatterns = [
   url(r'^flashcard/(?P<pk>\d+)/$', flashcard_detail, name='flashcard_detail'),
   url(r'^flashcard-list/$', flashcard_list, name='flashcard_list'),
   url(r'^delete/(?P<pk>\d+)/$', delete, name='delete'),
+  url(r'^edit/(?P<pk>\d+)/$', edit, name='edit',),
 ]

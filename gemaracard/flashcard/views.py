@@ -2,16 +2,36 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic.edit import UpdateView
 
 from django.utils import timezone
 
 from .forms import FlashcardForm
-from .models import Flashcard
+from .models import Flashcard, User
 
 @login_required
 def delete(request, pk):
     Flashcard.objects.get(pk=pk).delete()
     return render(request, 'delete-alert.html')
+
+# class FlashcardUpdate(UpdateView):
+#     model = Flashcard
+#     template = 'edit-flashcard.html'
+#
+#     def get_success_url(self):
+#         return reverse('flashcard_list')
+
+@login_required
+def edit(request, pk):
+    instance = Flashcard.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = FlashcardForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('flashcard_detail', pk=pk)
+    else:
+        form = FlashcardForm(request.POST or None, instance=instance)
+        return render(request, 'flashcard-form.html', {'form': form})
 
 @login_required
 def flashcard_new(request):
