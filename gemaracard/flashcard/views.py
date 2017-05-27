@@ -1,10 +1,17 @@
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
+
 from django.utils import timezone
 
 from .forms import FlashcardForm
 from .models import Flashcard
+
+@login_required
+def delete(request, pk):
+    Flashcard.objects.get(pk=pk).delete()
+    return render(request, 'delete-alert.html')
 
 @login_required
 def flashcard_new(request):
