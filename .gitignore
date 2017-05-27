@@ -2,3 +2,4 @@
 /source
 *.pyc
 /__pycache__
+/flashcard/__pycache__/
