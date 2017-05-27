@@ -1,3 +1,4 @@
 /gemaraenv
 /source
 *.pyc
+/__pycache__
