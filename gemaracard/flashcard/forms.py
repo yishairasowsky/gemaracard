@@ -1,7 +1,10 @@
 from django import forms
 from .models import Flashcard
+from crispy_forms.helper import FormHelper
 
 class FlashcardForm(forms.ModelForm):
+    helper = FormHelper()
+    helper.form_tag = False
     LANGUAGE_CHOICES = (
         ('HEB', 'Hebrew',),
         ('ARAM', 'Aramaic',),
