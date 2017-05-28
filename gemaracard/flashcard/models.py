@@ -12,12 +12,12 @@ class Flashcard(models.Model):
         (ARAMAIC, 'Aramaic'),
         (LOANWORD, 'Loanword')
     )
-    # how do i change this so that loanword can display field?
     language = models.CharField(
         max_length=4,
         choices=LANGUAGE_CHOICES,
         default=HEBREW,
     )
+    loanword_language = models.TextField(blank=True)
     VERB = 'VERB'
     NOUN = 'NOUN'
     ADJECTIVE = 'ADJ'

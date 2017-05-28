@@ -9,17 +9,15 @@ from django.utils import timezone
 from .forms import FlashcardForm
 from .models import Flashcard, User
 
+def set_optional_fields(card):
+    if card.language != 'LW':
+        card.loanword_language = ''
+    return card
+
 @login_required
 def delete(request, pk):
     Flashcard.objects.get(pk=pk).delete()
     return render(request, 'delete-alert.html')
-
-# class FlashcardUpdate(UpdateView):
-#     model = Flashcard
-#     template = 'edit-flashcard.html'
-#
-#     def get_success_url(self):
-#         return reverse('flashcard_list')
 
 @login_required
 def edit(request, pk):
@@ -27,6 +25,9 @@ def edit(request, pk):
     if request.method == 'POST':
         form = FlashcardForm(request.POST, instance=instance)
         if form.is_valid():
+            form.save()
+            # go back and correct the optional fields
+            form = set_optional_fields(instance)
             form.save()
             return redirect('flashcard_detail', pk=pk)
     else:
@@ -40,7 +41,8 @@ def flashcard_new(request):
         if form.is_valid():
             # commit=False b/c we want to add more data
             card = form.save(commit=False)
-            # add in once we have authentication
+            # validate extra optional fields
+            card = set_optional_fields(card)
             card.author = request.user
             card.published_date = timezone.now()
             card.save()
@@ -66,5 +68,4 @@ def flashcard_list(request):
     return render(request, 'flashcard-list.html', context)
 
 def index(request):
-    # return HttpResponse("Hello, world. You're at the flashcard index.")
     return render(request, 'index.html')

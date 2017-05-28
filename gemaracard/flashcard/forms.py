@@ -11,7 +11,7 @@ class FlashcardForm(forms.ModelForm):
         ('LW', 'Loanword',)
     )
     language = forms.ChoiceField(widget=forms.Select, choices=LANGUAGE_CHOICES)
-    loanword_language = forms.CharField(widget=forms.TextInput())
+    loanword_language = forms.CharField(required=False, widget=forms.TextInput())
     class Meta:
         model = Flashcard
         fields = ('vocab_term','language', 'loanword_language', 'part_of_speech', 'root',
