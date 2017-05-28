@@ -4,8 +4,25 @@
 {% block content %}
   <form method="POST">
     {% crispy form %}
-      <!-- {% csrf_token %}
-      {{ form.as_p }} -->
       <button type="submit" value="Save">Save</button>
   </form>
+  <script>
+    var languageOptions = document.getElementById('id_language');
+    languageOptions.onchange = function() {
+      var selectedLanguage = languageOptions.options[languageOptions.selectedIndex].value;
+      console.log(selectedLanguage);
+      var loanword_language_div = document.getElementById('div_id_loanword_language');
+      console.log(loanword_language_div);
+      if (selectedLanguage == 'LW') {
+        // var form = document.getElementsByTagName('form')[0];
+        // var PoSDiv = document.getElementById('div_id_part_of_speech');
+        // var testP = document.createElement('p');
+        // testP.innerHTML = "testing!";
+        // form.insertBefore(testP, PoSDiv);
+        loanword_language_div.style.display = 'block';
+      } else {
+        loanword_language_div.style.display = 'none';
+      }
+    }
+  </script>
 {% endblock %}
