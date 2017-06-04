@@ -2,4 +2,4 @@
 /source
 *.pyc
 /__pycache__
-/flashcard/__pycache__/
+gemaracard/flashcard/__pycache__/
