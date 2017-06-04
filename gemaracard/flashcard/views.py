@@ -54,7 +54,7 @@ def flashcard_new(request):
 @login_required
 def flashcard_detail(request, pk):
     try:
-        card = Flashcard.objects.get(pk=pk)
+        card = Flashcard.objects.get(pk=pk, author=request.user)
     except Flashcard.DoesNotExist:
         raise Http404
     context = {'card': card}
@@ -93,8 +93,25 @@ def text_detail(request, pk):
         text = Text.objects.get(pk=pk)
     except Text.DoesNotExist:
         raise Http404
-    context = {'text': text}
+    text_flashcards = text.flashcards.all()
+    user_flashcards = Flashcard.objects.filter(author=request.user)
+    context = {'text': text, 'text_flashcards': text_flashcards, 'user_flashcards': user_flashcards}
     return render(request, 'text.html', context)
+
+@login_required
+def link_flashcard_and_text(request, text_pk, card_pk):
+    try:
+        card = Flashcard.objects.get(pk=card_pk, author=request.user)
+    except Flashcard.DoesNotExist:
+        raise Http404
+    try:
+        text = Text.objects.get(pk=text_pk, user=request.user)
+    except Text.DoesNotExist:
+        raise Http404
+    text.flashcards.add(card)
+    # text_detail(request, text_pk)
+    return render(request, 'index.html')
+
 
 def index(request):
     return render(request, 'index.html')

@@ -7,4 +7,5 @@
     <li><a href="{% url 'flashcard_detail' card.pk %}">{{ card.vocab_term }}</a></li>
   {% endfor %}
 </ul>
+<a href="{% url 'flashcard_new' %}" class="btn btn-primary" role="button">New Gemaracard</a>
 {% endblock %}

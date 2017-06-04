@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from flashcard.views import delete, edit, flashcard_detail, flashcard_list, flashcard_new, index, text_detail, text_list, text_new
+from flashcard.views import delete, edit, flashcard_detail, flashcard_list, flashcard_new, index, link_flashcard_and_text, text_detail, text_list, text_new
 
 urlpatterns = [
   url(r'^$', index, name='index'),
@@ -12,4 +12,6 @@ urlpatterns = [
   url(r'^text/new/$', text_new, name='text_new'),
   url(r'^text-list/$', text_list, name='text_list'),
   url(r'^text/(?P<pk>\d+)/$', text_detail, name='text_detail'),
+  # need to remove $ ?
+  url(r'^link/(?P<text_pk>\d+)/(?P<card_pk>\d+)/$', link_flashcard_and_text, name='link_flashcard_and_text'),
 ]

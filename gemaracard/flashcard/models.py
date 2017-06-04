@@ -54,7 +54,7 @@ class Text(models.Model):
     text = models.TextField(blank=False)
     name = models.CharField(max_length=100)
     user = models.ForeignKey(User)
-    flashcard = models.ManyToManyField(Flashcard)
+    flashcards = models.ManyToManyField(Flashcard)
 
     def __str__(self):
         return self.name
