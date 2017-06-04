@@ -136,3 +136,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 COMPRESS_PRECOMPILERS = (
    ('text/less', 'lessc {infile} {outfile}'),
 )
+
+# STATICFILES_FINDERS = [
+#     'compressor.finders.CompressorFinder',
+# ]
