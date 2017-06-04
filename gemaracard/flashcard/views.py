@@ -6,7 +6,7 @@ from django.views.generic.edit import UpdateView
 
 from django.utils import timezone
 
-from .forms import FlashcardForm
+from .forms import FlashcardForm, TextForm
 from .models import Flashcard, User
 
 def set_optional_fields(card):
@@ -66,6 +66,20 @@ def flashcard_list(request):
     sorted_flashcards = flashcards.order_by('vocab_term')
     context = {'cards': sorted_flashcards}
     return render(request, 'flashcard-list.html', context)
+
+@login_required
+def text_new(request):
+    if request.method == 'POST':
+        form = TextForm(request.POST)
+        if form.is_valid():
+            text = form.save(commit=False)
+            text.user = request.user
+            text.save()
+            # return redirect('text-view', pk=text.pk)
+            return redirect('index')
+    else:
+        form = TextForm()
+    return render(request, 'text-form.html', {'form': form})
 
 def index(request):
     return render(request, 'index.html')

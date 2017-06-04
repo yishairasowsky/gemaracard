@@ -49,3 +49,15 @@ class Flashcard(models.Model):
 
     def __unicode__(self):
         return self.vocab_term
+
+class Text(models.Model):
+    text = models.TextField(blank=False)
+    name = models.CharField(max_length=100)
+    user = models.ForeignKey(User)
+    flashcard = models.ManyToManyField(Flashcard)
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.name
