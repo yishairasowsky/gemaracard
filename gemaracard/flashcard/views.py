@@ -7,7 +7,7 @@ from django.views.generic.edit import UpdateView
 from django.utils import timezone
 
 from .forms import FlashcardForm, TextForm
-from .models import Flashcard, User
+from .models import Flashcard, User, Text
 
 def set_optional_fields(card):
     if card.language != 'LW':
@@ -75,11 +75,26 @@ def text_new(request):
             text = form.save(commit=False)
             text.user = request.user
             text.save()
-            # return redirect('text-view', pk=text.pk)
-            return redirect('index')
+            return redirect('text_detail', pk=text.pk)
     else:
         form = TextForm()
     return render(request, 'text-form.html', {'form': form})
+
+@login_required
+def text_list(request):
+    texts = Text.objects.filter(user=request.user)
+    sorted_texts = texts.order_by('name')
+    context = {'texts': sorted_texts}
+    return render(request, 'text-list.html', context)
+
+@login_required
+def text_detail(request, pk):
+    try:
+        text = Text.objects.get(pk=pk)
+    except Text.DoesNotExist:
+        raise Http404
+    context = {'text': text}
+    return render(request, 'text.html', context)
 
 def index(request):
     return render(request, 'index.html')
