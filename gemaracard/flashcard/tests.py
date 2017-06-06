@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AnonymousUser, User
+from django.contrib.auth.models import User
 from django.test import Client, TestCase, override_settings
 from django.core.urlresolvers import resolve
 # from django.test.client import RequestFactory
@@ -19,7 +19,6 @@ from .views import flashcard_new, index
 @override_settings(COMPRESS_PRECOMPILERS=())
 class GemaraCardTest(TestCase):
     def setUp(self):
-        # self.factory = RequestFactory()
         self.c = Client()
         pass
 
@@ -41,6 +40,7 @@ class GemaraCardTest(TestCase):
     # def test_flashcard(self):
     #     flashcard = Flashcard.objects.all()[0]
     #     self.assertTrue(isinstance(flashcard, Flashcard))
+
 
 @override_settings(COMPRESS_PRECOMPILERS=())
 class LoggedInGemaraCardTest(TestCase):
@@ -93,3 +93,13 @@ class LoggedInGemaraCardTest(TestCase):
         found_card_arr = Flashcard.objects.filter(vocab_term='אב')
         found_card = found_card_arr[0]
         self.assertEqual(found_card.vocab_term, 'אב')
+
+    def test_create_flashcard_through_form(self):
+        form = FlashcardForm({'vocab_term': 'אב',
+                              'author_id': 1,
+                              'translation': 'father',
+                              'language': 'HEB',
+                              'part_of_speech': 'NOUN'
+                             })
+        self.assertTrue(form.is_valid())
+        card = form.save()
