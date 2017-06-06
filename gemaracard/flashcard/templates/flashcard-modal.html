@@ -1,0 +1,24 @@
+<div class="flashcard">
+  <h3>{{ card }}</h3>
+  <ul>
+    {% if card.loanword_language %}
+    <li>{{ card.loanword_language }}, {{ card.part_of_speech }}</li>
+    {% else %}
+    <li>{{ card.language }}, {{ card.part_of_speech }}</li>
+    {% endif %}
+    <li><strong>Root:</strong> {{ card.root }}</li>
+    {% if card.page_number %}
+      <li><strong>Page number:</strong> {{ card.page_number }}</li>
+    {% endif %}
+    <li><strong>Translation:</strong> {{ card.translation }}</li>
+    {% if card.notes %}
+      <li><strong>Notes:</strong> {{ card.notes }}</li>
+    {% endif %}
+  </ul>
+</div>
+<div class="btn-div">
+  <a class="btn btn-info" href="{% url 'edit' card.pk %}" role="button">Edit this card</a>
+</div>
+<div class="btn-div">
+  <a class="btn btn-danger" href="{% url 'delete' card.pk %}" role="button">Delete this card</a>
+</div>

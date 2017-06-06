@@ -1,11 +1,12 @@
 from django.conf.urls import url
 
-from flashcard.views import delete, edit, flashcard_detail, flashcard_list, flashcard_new, index, link_flashcard_and_text, text_detail, text_list, text_new
+from flashcard.views import delete, edit, flashcard_detail, flashcard_list, flashcard_modal, flashcard_new, index, link_flashcard_and_text, text_detail, text_list, text_new
 
 urlpatterns = [
   url(r'^$', index, name='index'),
   url(r'^flashcard/new/$', flashcard_new, name='flashcard_new'),
   url(r'^flashcard/(?P<pk>\d+)/$', flashcard_detail, name='flashcard_detail'),
+  url(r'^flashcard/modal/(?P<pk>\d+)/$', flashcard_modal, name='flashcard_modal'),
   url(r'^flashcard-list/$', flashcard_list, name='flashcard_list'),
   url(r'^delete/(?P<pk>\d+)/$', delete, name='delete'),
   url(r'^edit/(?P<pk>\d+)/$', edit, name='edit',),

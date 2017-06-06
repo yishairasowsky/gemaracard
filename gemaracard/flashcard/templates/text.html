@@ -9,14 +9,34 @@
   <h3>Flashcards</h3>
   <ul>
     {% for flashcard in text_flashcards %}
-      <li><a href="{% url 'flashcard_detail' flashcard.pk %}">{{ flashcard.vocab_term }}</a></li>
+      <li><a class="flashcard-link" data-toggle="modal" data-target="#basicModal" flashcard="{{ flashcard.pk }}">{{ flashcard.vocab_term }}</a></li>
     {% endfor %}
   </ul>
 </div>
 <div>
-  <h3>Add a Flashcard</h3>
+  <h3>Link a Flashcard</h3>
   {% for flashcard in user_flashcards %}
     <li><a href="{% url 'link_flashcard_and_text' text_pk=text.pk card_pk=flashcard.pk%}">{{ flashcard.vocab_term }}</a></li>
   {% endfor %}
 </div>
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body" id="insert-flashcard">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $('.flashcard-link').click(function(){
+      var flashcardId = $(this).attr('flashcard');
+      var flashcardUrl = '/flashcard/modal/' + flashcardId + '/';
+      $('#insert-flashcard').load(flashcardUrl);
+    });
+  });
+</script>
 {% endblock %}

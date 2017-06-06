@@ -9,15 +9,18 @@ from django.utils import timezone
 from .forms import FlashcardForm, TextForm
 from .models import Flashcard, User, Text
 
+
 def set_optional_fields(card):
     if card.language != 'LW':
         card.loanword_language = ''
     return card
 
+
 @login_required
 def delete(request, pk):
     Flashcard.objects.get(pk=pk).delete()
     return render(request, 'delete-alert.html')
+
 
 @login_required
 def edit(request, pk):
@@ -33,6 +36,7 @@ def edit(request, pk):
     else:
         form = FlashcardForm(request.POST or None, instance=instance)
         return render(request, 'flashcard-form.html', {'form': form})
+
 
 @login_required
 def flashcard_new(request):
@@ -51,6 +55,7 @@ def flashcard_new(request):
         form = FlashcardForm()
     return render(request, 'flashcard-form.html', {'form': form})
 
+
 @login_required
 def flashcard_detail(request, pk):
     try:
@@ -60,12 +65,24 @@ def flashcard_detail(request, pk):
     context = {'card': card}
     return render(request, 'flashcard.html', context)
 
+
+@login_required
+def flashcard_modal(request, pk):
+    try:
+        card = Flashcard.objects.get(pk=pk, author=request.user)
+    except Flashcard.DoesNotExist:
+        raise Http404
+    context = {'card': card}
+    return render(request, 'flashcard-modal.html', context)
+
+
 @login_required
 def flashcard_list(request):
     flashcards = Flashcard.objects.filter(author=request.user)
     sorted_flashcards = flashcards.order_by('vocab_term')
     context = {'cards': sorted_flashcards}
     return render(request, 'flashcard-list.html', context)
+
 
 @login_required
 def text_new(request):
@@ -80,12 +97,14 @@ def text_new(request):
         form = TextForm()
     return render(request, 'text-form.html', {'form': form})
 
+
 @login_required
 def text_list(request):
     texts = Text.objects.filter(user=request.user)
     sorted_texts = texts.order_by('name')
     context = {'texts': sorted_texts}
     return render(request, 'text-list.html', context)
+
 
 @login_required
 def text_detail(request, pk):
@@ -97,6 +116,7 @@ def text_detail(request, pk):
     user_flashcards = Flashcard.objects.filter(author=request.user)
     context = {'text': text, 'text_flashcards': text_flashcards, 'user_flashcards': user_flashcards}
     return render(request, 'text.html', context)
+
 
 @login_required
 def link_flashcard_and_text(request, text_pk, card_pk):
