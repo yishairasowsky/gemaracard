@@ -6,7 +6,7 @@
 <p>{{ text.text }}</p>
 </div>
 <div class="flashcard-list">
-  <h3>Flashcards</h3>
+  <h3>Linked Gemaracards</h3>
   <ul>
     {% for flashcard in text_flashcards %}
       <li><a class="flashcard-link" data-toggle="modal" data-target="#basicModal" flashcard="{{ flashcard.pk }}">{{ flashcard.vocab_term }}</a></li>
@@ -14,10 +14,10 @@
   </ul>
 </div>
 <div>
-  <h3>Link a Flashcard</h3>
-  {% for flashcard in user_flashcards %}
-    <li><a href="{% url 'link_flashcard_and_text' text_pk=text.pk card_pk=flashcard.pk%}">{{ flashcard.vocab_term }}</a></li>
-  {% endfor %}
+  {% if user_flashcards %}
+    <a class="flashcard-link-list btn btn-primary" data-toggle="modal" data-target="#basicModal" text-pk="{{ text.pk }}">Link a Gemaracard</a>
+  {% endif %}
+  <a href="{% url 'flashcard_new' %}" class="btn btn-primary" role="button">New Gemaracard</a>
 </div>
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
   <div class="modal-dialog">
@@ -36,6 +36,10 @@
       var flashcardId = $(this).attr('flashcard');
       var flashcardUrl = '/flashcard/modal/' + flashcardId + '/';
       $('#insert-flashcard').load(flashcardUrl);
+    });
+    $('.flashcard-link-list').click(function(){
+      var textPk = $(this).attr('text-pk');
+      $('#insert-flashcard').load('/link-flashcard-list/' + textPk + '/');
     });
   });
 </script>

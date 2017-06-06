@@ -1,0 +1,4 @@
+<h3>Link a Gemaracard</h3>
+{% for flashcard in user_flashcards %}
+  <li><a href="{% url 'link_flashcard_and_text' text_pk=text_pk card_pk=flashcard.pk %}">{{ flashcard.vocab_term }}</a></li>
+{% endfor %}

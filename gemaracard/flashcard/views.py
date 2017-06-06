@@ -117,6 +117,14 @@ def text_detail(request, pk):
     context = {'text': text, 'text_flashcards': text_flashcards, 'user_flashcards': user_flashcards}
     return render(request, 'text.html', context)
 
+def link_flashcard_list(request, text_pk):
+    try:
+        flashcards = Flashcard.objects.all()
+        user_flashcards = flashcards.filter(author=request.user)
+    except Flashcard.DoesNotExist:
+        raise Http404
+    context = {'user_flashcards': user_flashcards, 'text_pk': text_pk}
+    return render(request, 'link-flashcard-list.html', context)
 
 @login_required
 def link_flashcard_and_text(request, text_pk, card_pk):
