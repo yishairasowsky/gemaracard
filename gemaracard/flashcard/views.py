@@ -39,7 +39,7 @@ def edit(request, pk):
 
 
 @login_required
-def flashcard_new(request):
+def flashcard_new(request, text_pk=None):
     if request.method == 'POST':
         form = FlashcardForm(request.POST)
         if form.is_valid():
@@ -50,11 +50,16 @@ def flashcard_new(request):
             card.author = request.user
             card.published_date = timezone.now()
             card.save()
+            if text_pk:
+                try:
+                    text = Text.objects.get(pk=text_pk, user=request.user)
+                except Text.DoesNotExist:
+                    raise Http404
+                text.flashcards.add(card)
             return redirect('flashcard_detail', pk=card.pk)
     else:
         form = FlashcardForm()
     return render(request, 'flashcard-form.html', {'form': form})
-
 
 @login_required
 def flashcard_detail(request, pk):

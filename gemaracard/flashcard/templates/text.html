@@ -15,9 +15,9 @@
 </div>
 <div>
   {% if user_flashcards %}
-    <a class="flashcard-link-list btn btn-primary" data-toggle="modal" data-target="#basicModal" text-pk="{{ text.pk }}">Link a Flashcard</a>
+    <a class="flashcard-link-list btn btn-primary" data-toggle="modal" data-target="#basicModal" text-pk="{{ text.pk }}">Link an Existing Flashcard</a>
   {% endif %}
-  <a href="{% url 'flashcard_new' %}" class="btn btn-primary" role="button">New Gemaracard</a>
+  <a href="{% url 'flashcard_new' text.pk %}" class="btn btn-primary" role="button">Create and Link New Flashcard</a>
 </div>
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
   <div class="modal-dialog">

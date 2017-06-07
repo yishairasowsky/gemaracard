@@ -5,6 +5,7 @@ from flashcard.views import delete, edit, flashcard_detail, flashcard_list, flas
 urlpatterns = [
   url(r'^$', index, name='index'),
   url(r'^flashcard/new/$', flashcard_new, name='flashcard_new'),
+  url(r'^flashcard/new/(?P<text_pk>\d+)/$', flashcard_new, name='flashcard_new'),
   url(r'^flashcard/(?P<pk>\d+)/$', flashcard_detail, name='flashcard_detail'),
   url(r'^flashcard/modal/(?P<pk>\d+)/$', flashcard_modal, name='flashcard_modal'),
   url(r'^flashcard-list/$', flashcard_list, name='flashcard_list'),
