@@ -126,9 +126,12 @@ def link_flashcard_list(request, text_pk):
     try:
         flashcards = Flashcard.objects.all()
         user_flashcards = flashcards.filter(author=request.user)
+        text = Text.objects.get(pk=text_pk)
+        text_flashcards = text.flashcards.all()
+        unlinked_flashcards = list(set(user_flashcards) - set(text_flashcards))
     except Flashcard.DoesNotExist:
         raise Http404
-    context = {'user_flashcards': user_flashcards, 'text_pk': text_pk}
+    context = {'user_flashcards': unlinked_flashcards, 'text_pk': text_pk}
     return render(request, 'link-flashcard-list.html', context)
 
 @login_required
@@ -142,8 +145,7 @@ def link_flashcard_and_text(request, text_pk, card_pk):
     except Text.DoesNotExist:
         raise Http404
     text.flashcards.add(card)
-    # text_detail(request, text_pk)
-    return render(request, 'index.html')
+    return redirect('text_detail', pk=text_pk)
 
 
 def index(request):
